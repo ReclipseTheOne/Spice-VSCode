@@ -1,0 +1,163 @@
+{
+  "name": "spice-language",
+  "displayName": "Spice Language Support",
+  "description": "Language support for Spice (.spc) - A Python superset with static typing features",
+  "version": "0.1.0",
+  "publisher": "reclipse",
+  "icon": "images/icon.png",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Snippets",
+    "Linters"
+  ],
+  "keywords": [
+    "spice",
+    "spc",
+    "python",
+    "static typing",
+    "interfaces"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourusername/vscode-spice.git"
+  },
+  "activationEvents": [
+    "onLanguage:spice"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "spice",
+        "aliases": [
+          "Spice",
+          "spice"
+        ],
+        "extensions": [
+          ".spc"
+        ],
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./images/file-icon.svg",
+          "dark": "./images/file-icon.svg"
+        }
+      }
+    ],
+    "grammars": [
+      {
+        "language": "spice",
+        "scopeName": "source.spice",
+        "path": "./syntaxes/spice.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "spice",
+        "path": "./snippets/spice.json"
+      }
+    ],
+    "configuration": {
+      "title": "Spice",
+      "properties": {
+        "spice.enableAutoComplete": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable/disable auto-completion"
+        },
+        "spice.enableHover": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable/disable hover information"
+        },
+        "spice.enableDiagnostics": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable/disable diagnostics (error checking)"
+        },
+        "spice.compilerPath": {
+          "type": "string",
+          "default": "spicy",
+          "description": "Path to the Spice compiler executable"
+        },
+        "spice.typeCheckingLevel": {
+          "type": "string",
+          "enum": [
+            "none",
+            "warnings",
+            "strict"
+          ],
+          "default": "warnings",
+          "description": "Type checking level"
+        },
+        "spice.checkBuiltinOverrides": {
+          "type": "boolean",
+          "default": true,
+          "description": "Check for built-in function overrides before running code"
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "spice.compile",
+        "title": "Spice: Compile to Python"
+      },
+      {
+        "command": "spice.run",
+        "title": "Spice: Run Current File"
+      },
+      {
+        "command": "spice.checkSyntax",
+        "title": "Spice: Check Syntax"
+      },
+      {
+        "command": "spice.enableBuiltinOverrideCheck",
+        "title": "Spice: Re-enable Built-in Override Warnings"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "spice.compile",
+        "key": "ctrl+shift+b",
+        "mac": "cmd+shift+b",
+        "when": "resourceExtname == .spc"
+      },
+      {
+        "command": "spice.run",
+        "key": "ctrl+shift+r",
+        "mac": "cmd+shift+r",
+        "when": "resourceExtname == .spc"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/node": "16.x",
+    "@types/vscode": "^1.103.0",
+    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
+    "@vscode/test-electron": "^2.2.0",
+    "eslint": "^8.28.0",
+    "typescript": "^4.9.3"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^8.1.0",
+    "vscode-languageserver": "^8.1.0",
+    "vscode-languageserver-textdocument": "^1.0.12"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yourusername/vscode-spice/issues"
+  },
+  "homepage": "https://github.com/yourusername/vscode-spice#readme"
+}

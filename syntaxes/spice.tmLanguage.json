@@ -1,0 +1,306 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Spice",
+  "patterns": [
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#strings"
+    },
+    {
+      "include": "#numbers"
+    },
+    {
+      "include": "#keywords"
+    },
+    {
+      "include": "#modifiers"
+    },
+    {
+      "include": "#operators"
+    },
+    {
+      "include": "#functions"
+    },
+    {
+      "include": "#classes"
+    },
+    {
+      "include": "#interfaces"
+    },
+    {
+      "include": "#types"
+    },
+    {
+      "include": "#constants"
+    }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.number-sign.spice",
+          "match": "#.*$"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.triple.spice",
+          "begin": "\"\"\"",
+          "end": "\"\"\""
+        },
+        {
+          "name": "string.quoted.triple.spice",
+          "begin": "'''",
+          "end": "'''"
+        },
+        {
+          "name": "string.interpolated.spice",
+          "begin": "f\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.spice",
+              "match": "\\\\."
+            },
+            {
+              "name": "variable.other.interpolated.spice",
+              "match": "\\{[^}]+\\}"
+            }
+          ]
+        },
+        {
+          "name": "string.interpolated.spice",
+          "begin": "f'",
+          "end": "'",
+          "patterns": [
+            {
+              "name": "constant.character.escape.spice",
+              "match": "\\\\."
+            },
+            {
+              "name": "variable.other.interpolated.spice",
+              "match": "\\{[^}]+\\}"
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.raw.spice",
+          "begin": "r\"",
+          "end": "\""
+        },
+        {
+          "name": "string.quoted.raw.spice",
+          "begin": "r'",
+          "end": "'"
+        },
+        {
+          "name": "string.regex.spice",
+          "begin": "REGEX\"",
+          "end": "\""
+        },
+        {
+          "name": "string.regex.spice",
+          "begin": "REGEX'",
+          "end": "'"
+        },
+        {
+          "name": "string.quoted.double.spice",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.spice",
+              "match": "\\\\."
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.single.spice",
+          "begin": "'",
+          "end": "'",
+          "patterns": [
+            {
+              "name": "constant.character.escape.spice",
+              "match": "\\\\."
+            }
+          ]
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.float.spice",
+          "match": "\\b\\d+\\.\\d+\\b"
+        },
+        {
+          "name": "constant.numeric.integer.spice",
+          "match": "\\b\\d+\\b"
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.flow.spice",
+          "match": "\\b(if|elif|else|for|while|switch|case|default|break|continue|return|try|except|finally|raise|with|as)\\b"
+        },
+        {
+          "name": "keyword.control.import.spice",
+          "match": "\\b(import|from)\\b"
+        },
+        {
+          "name": "keyword.other.spice",
+          "match": "\\b(def|class|pass|lambda|in|is|and|or|not)\\b"
+        },
+        {
+          "name": "keyword.declaration.spice",
+          "match": "\\b(interface|extends|implements)\\b"
+        }
+      ]
+    },
+    "modifiers": {
+      "patterns": [
+        {
+          "name": "storage.modifier.spice",
+          "match": "\\b(abstract|final|static)\\b"
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "name": "keyword.operator.comparison.spice",
+          "match": "(==|!=|<=|>=|<|>)"
+        },
+        {
+          "name": "keyword.operator.arithmetic.spice",
+          "match": "(\\+|-|\\*|/|%|\\*\\*|//)"
+        },
+        {
+          "name": "keyword.operator.assignment.spice",
+          "match": "(=|\\+=|-=|\\*=|/=|%=|\\*\\*=|//=)"
+        },
+        {
+          "name": "keyword.operator.arrow.spice",
+          "match": "->"
+        }
+      ]
+    },
+    "functions": {
+      "patterns": [
+        {
+          "match": "\\b(def)\\s+(\\w+)\\s*\\(",
+          "captures": {
+            "1": {
+              "name": "keyword.other.def.spice"
+            },
+            "2": {
+              "name": "entity.name.function.spice"
+            }
+          }
+        },
+        {
+          "match": "\\b(static\\s+def)\\s+(\\w+)\\s*\\(",
+          "captures": {
+            "1": {
+              "name": "storage.modifier.static.spice"
+            },
+            "2": {
+              "name": "entity.name.function.spice"
+            }
+          }
+        },
+        {
+          "match": "\\b(\\w+)\\s*\\(",
+          "captures": {
+            "1": {
+              "name": "entity.name.function.call.spice"
+            }
+          }
+        }
+      ]
+    },
+    "classes": {
+      "patterns": [
+        {
+          "match": "\\b(class)\\s+(\\w+)",
+          "captures": {
+            "1": {
+              "name": "keyword.other.class.spice"
+            },
+            "2": {
+              "name": "entity.name.class.spice"
+            }
+          }
+        },
+        {
+          "match": "\\b(abstract\\s+class)\\s+(\\w+)",
+          "captures": {
+            "1": {
+              "name": "storage.modifier.abstract.spice"
+            },
+            "2": {
+              "name": "entity.name.class.spice"
+            }
+          }
+        },
+        {
+          "match": "\\b(final\\s+class)\\s+(\\w+)",
+          "captures": {
+            "1": {
+              "name": "storage.modifier.final.spice"
+            },
+            "2": {
+              "name": "entity.name.class.spice"
+            }
+          }
+        }
+      ]
+    },
+    "interfaces": {
+      "patterns": [
+        {
+          "match": "\\b(interface)\\s+(\\w+)",
+          "captures": {
+            "1": {
+              "name": "keyword.declaration.interface.spice"
+            },
+            "2": {
+              "name": "entity.name.interface.spice"
+            }
+          }
+        }
+      ]
+    },
+    "types": {
+      "patterns": [
+        {
+          "name": "support.type.spice",
+          "match": "\\b(int|float|str|bool|list|dict|tuple|set|None|Any)\\b"
+        }
+      ]
+    },
+    "constants": {
+      "patterns": [
+        {
+          "name": "constant.language.spice",
+          "match": "\\b(True|False|None)\\b"
+        },
+        {
+          "name": "variable.language.self.spice",
+          "match": "\\b(self)\\b"
+        },
+        {
+          "name": "variable.language.super.spice",
+          "match": "\\b(super)\\b"
+        }
+      ]
+    }
+  },
+  "scopeName": "source.spice"
+}
