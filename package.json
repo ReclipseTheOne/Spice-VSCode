@@ -4,9 +4,8 @@
   "description": "Language support for Spice (.spc) - A Python superset with static typing features",
   "version": "0.1.0",
   "publisher": "reclipse",
-  "icon": "images/icon.png",
   "engines": {
-    "vscode": "^1.74.0"
+    "vscode": "^1.103.0"
   },
   "categories": [
     "Programming Languages",
@@ -39,11 +38,7 @@
         "extensions": [
           ".spc"
         ],
-        "configuration": "./language-configuration.json",
-        "icon": {
-          "light": "./images/file-icon.svg",
-          "dark": "./images/file-icon.svg"
-        }
+        "configuration": "./language-configuration.json"
       }
     ],
     "grammars": [
