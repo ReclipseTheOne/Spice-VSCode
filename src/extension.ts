@@ -22,6 +22,25 @@ const execAsync = promisify(exec);
 
 let client: LanguageClient;
 
+function getConfig(): vscode.WorkspaceConfiguration {
+    return vscode.workspace.getConfiguration('spice');
+}
+
+function getPythonPath(): string {
+    const config = getConfig();
+    return vscode.workspace.getConfiguration('python').get<string>('defaultInterpreterPath', 'python');
+}
+
+function getLspServerPath(): string {
+    const config = getConfig();
+    return config.get<string>('lspServerPath', 'spice-lsp');
+}
+
+function getCompilerPath(): string {
+    const config = getConfig();
+    return config.get<string>('compilerPath', 'spicy');
+}
+
 export function activate(context: vscode.ExtensionContext) {
     console.log('Spice Language extension is now active!');
 
@@ -48,7 +67,7 @@ export function activate(context: vscode.ExtensionContext) {
 function startLanguageServer(context: vscode.ExtensionContext) {
     // Get the LSP server path from configuration
     const config = vscode.workspace.getConfiguration('spice');
-    const serverCommand = config.get<string>('lspServerPath', 'spice-lsp');
+    const serverCommand = getLspServerPath();
 
     // Server options - start the Python LSP server
     const serverOptions: ServerOptions = {
@@ -95,10 +114,9 @@ async function compileSpiceFile() {
 
     const spicePath = document.fileName;
     const pythonPath = spicePath.replace(/\.spc$/, '.py');
-    const compilerPath = vscode.workspace.getConfiguration('spice').get('compilerPath', 'spicy');
 
     try {
-        const { stdout, stderr } = await execAsync(`${compilerPath} "${spicePath}" -o "${pythonPath}"`);
+        const { stdout, stderr } = await execAsync(`${getCompilerPath()} "${spicePath}" -o "${pythonPath}"`);
         if (stderr) {
             vscode.window.showErrorMessage(`Compilation error: ${stderr}`);
         } else {
@@ -120,11 +138,17 @@ async function runSpiceFile() {
     await document.save();
 
     const spicePath = document.fileName;
-    const runnerPath = 'spice';
+    const pyPath = spicePath.replace(/\.spc$/, '.py');
 
-    const terminal = vscode.window.createTerminal('Spice Run');
+    // Reuse existing Spice Run terminal if it exists
+    let terminal = vscode.window.terminals.find(t => t.name === 'Spice Run');
+    if (!terminal) {
+        terminal = vscode.window.createTerminal('Spice Run');
+    }
     terminal.show();
-    terminal.sendText(`${runnerPath} "${spicePath}"`);
+    terminal.sendText(`${getCompilerPath()} "${spicePath}"`);
+    
+    terminal.sendText(`python "${pyPath}"`);
 }
 
 async function checkSyntax() {
@@ -138,10 +162,9 @@ async function checkSyntax() {
     await document.save();
 
     const spicePath = document.fileName;
-    const compilerPath = vscode.workspace.getConfiguration('spice').get('compilerPath', 'spicy');
 
     try {
-        const { stdout, stderr } = await execAsync(`${compilerPath} "${spicePath}" -c`);
+        const { stdout, stderr } = await execAsync(`${getCompilerPath()} "${spicePath}" -c`);
         if (stderr) {
             vscode.window.showErrorMessage(`Syntax error: ${stderr}`);
         } else {
