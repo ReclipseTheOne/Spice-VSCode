@@ -63,5 +63,57 @@
       "}"
     ],
     "description": "Class implementing an interface"
+  },
+  "Enum": {
+    "prefix": "enum",
+    "body": [
+      "enum ${1:Name} {",
+      "\t${2:FIRST},",
+      "\t${3:SECOND}",
+      "}"
+    ],
+    "description": "Enum declaration"
+  },
+  "Data Class": {
+    "prefix": "data class",
+    "body": [
+      "data class ${1:Name}(${2:field}: ${3:Type});"
+    ],
+    "description": "Data class declaration"
+  },
+  "Switch": {
+    "prefix": "switch",
+    "body": [
+      "switch (${1:value}) {",
+      "\tcase ${2:pattern}: {",
+      "\t\t${3:pass};",
+      "\t}",
+      "\tdefault: {",
+      "\t\t${4:pass};",
+      "\t}",
+      "}"
+    ],
+    "description": "Switch statement with cases and a default"
+  },
+  "Runtime Annotation": {
+    "prefix": "@",
+    "body": [
+      "@${1:decorator}"
+    ],
+    "description": "Runtime annotation (emitted as a Python decorator)"
+  },
+  "Compile-time Annotation": {
+    "prefix": "@!",
+    "body": [
+      "@!${1:annotation}"
+    ],
+    "description": "Compile-time annotation (processed by the compiler, then stripped)"
+  },
+  "Print On Call": {
+    "prefix": "@!print_on_call",
+    "body": [
+      "@!print_on_call(time_format=\"${1:%H:%M:%S}\")"
+    ],
+    "description": "Inject a timestamped log line when the function is called"
   }
 }

@@ -9,6 +9,9 @@
       "include": "#strings"
     },
     {
+      "include": "#annotations"
+    },
+    {
       "include": "#numbers"
     },
     {
@@ -143,6 +146,34 @@
               "match": "\\\\."
             }
           ]
+        }
+      ]
+    },
+    "annotations": {
+      "patterns": [
+        {
+          "comment": "Compile-time annotation: @!name / @!name(args) - processed and stripped by the compiler",
+          "match": "(@!)\\s*([A-Za-z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": {
+              "name": "keyword.control.annotation.compile-time.spice"
+            },
+            "2": {
+              "name": "entity.name.function.decorator.compile-time.spice"
+            }
+          }
+        },
+        {
+          "comment": "Runtime annotation: @name / @name.path(args) - emitted as a Python decorator",
+          "match": "(@)\\s*([A-Za-z_][A-Za-z0-9_.]*)",
+          "captures": {
+            "1": {
+              "name": "punctuation.definition.annotation.spice"
+            },
+            "2": {
+              "name": "entity.name.function.decorator.spice"
+            }
+          }
         }
       ]
     },
