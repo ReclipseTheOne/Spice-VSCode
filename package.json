@@ -2,7 +2,7 @@
   "name": "spice-language",
   "displayName": "Spice Language Support",
   "description": "Language support for Spice (.spc) - A Python superset with static typing features",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "publisher": "reclipse",
   "engines": {
     "vscode": "^1.93.0"
